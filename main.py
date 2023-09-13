@@ -13,7 +13,7 @@ import utils
 from utils.constants import CLASSIFIERS
 from utils.constants import ARCHIVE_NAMES
 from utils.constants import ITERATIONS
-from utils.utils import read_all_datasets
+from utils.utils import read_all_datasets, ensure_gpu
 
 
 def fit_classifier():
@@ -78,6 +78,8 @@ def create_classifier(classifier_name, input_shape, nb_classes, output_directory
 
 
 ############################################### main
+
+ensure_gpu()
 
 # change this directory for your machine
 root_dir = '/dl-4-tsc/'

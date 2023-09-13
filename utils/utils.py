@@ -667,3 +667,21 @@ def viz_cam(root_dir):
         # cbar.ax.set_yticklabels([100,75,50,25,0])
         plt.savefig(root_dir + '/temp/' + classifier + '-cam-' + save_name + '-class-' + str(int(c)) + '.png',
                     bbox_inches='tight', dpi=1080)
+
+
+def ensure_gpu(ensure: bool=None):
+    """
+    Ensure that the GPU is used when the "ensure" parameter is True or ensure
+    parameter is is None (default) and environment variable "USE_GPU" is set to "1" or "True"
+    """
+    if ensure is None:
+        import os
+        ensure = os.environ.get('USE_GPU', '').lower() in ['1', 'true']
+
+    if ensure:
+        import tensorflow as tf
+        import time
+        gpus = tf.config.list_physical_devices('GPU')
+        print(f'Found {len(gpus)} gpus: {[gpu.name for gpu in gpus]}')
+        if len(gpus)==0:
+            raise RuntimeError(f"Unable to use GPU")
